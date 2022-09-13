@@ -6,7 +6,7 @@ server:
   port: 22
 
   # Fake hostname to be displayed in various commands and prompt
-  hostname: spr1139
+  hostname: nas002
 
   # Allow random user to login
   allowRandomUser: false

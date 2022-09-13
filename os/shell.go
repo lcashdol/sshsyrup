@@ -39,7 +39,7 @@ func (sh *Shell) HandleRequest(hook termlogger.LogHook) {
 	}{
 		tLog.In(),
 		tLog.Out(),
-	}, "$ ")
+	}, "# ") /*modify the prompt here*/
 	defer func() {
 		if r := recover(); r != nil {
 			sh.log.Errorf("Recovered from panic %v", r)
