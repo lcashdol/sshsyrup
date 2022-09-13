@@ -3,7 +3,7 @@ server:
   addr: 0.0.0.0
 
   # Port Syrup listening to
-  port: 22
+  port: 2222
 
   # Fake hostname to be displayed in various commands and prompt
   hostname: nas002
