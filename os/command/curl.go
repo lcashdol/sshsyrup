@@ -29,7 +29,7 @@ func (wg curl) Exec(args []string, sys os.Sys) int {
 	err := flag.Parse(args)
 	f := flag.Args()
 	if len(args) == 0 {
-		fmt.Fprintln(sys.Out(), "curl: missing URL\nUsage: curl [OPTION]... [URL]...\n\nTry `curl --help' for more options.")
+		fmt.Fprintln(sys.Out(), "curl: try 'curl --help' or 'curl --manual' for more information")
 		return 1
 	}
 	url := strings.TrimSpace(f[0])
