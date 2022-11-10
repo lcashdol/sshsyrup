@@ -214,7 +214,7 @@ func (sys *System) exec(path string, args []string, io termlogger.StdIOErr) (int
 					"args":  args,
 					"error": r,
 				}).Error("Command has crashed")
-				sys.Err().Write([]byte("Segmentation fault\n"))
+				sys.Err().Write([]byte("Segmentation fault.\n"))
 			}
 		}()
 		var res int

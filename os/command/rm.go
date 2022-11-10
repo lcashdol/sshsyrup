@@ -22,5 +22,5 @@ func (i rm) Exec(args []string, sys os.Sys) int {
 }
 
 func (i rm) Where() string {
-	return "/bin/uname"
+	return "/bin/rm"
 }

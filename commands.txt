@@ -12,6 +12,7 @@ chroot
 comm
 cp
 csplit
+curl
 cut
 date
 dd
