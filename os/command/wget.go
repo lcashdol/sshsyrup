@@ -10,10 +10,11 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"flag"
 
 	"github.com/mkishere/sshsyrup/os"
 	"github.com/spf13/afero"
-	"github.com/spf13/pflag"
+//	"github.com/spf13/pflag"
 )
 
 type wget struct{}
@@ -31,9 +32,9 @@ func printTs() string {
 }
 
 func (wg wget) Exec(args []string, sys os.Sys) int {
-	flag := pflag.NewFlagSet("arg", pflag.ContinueOnError)
+	flag := flag.NewFlagSet("arg", flag.ContinueOnError)
 	out := flag.String("O", "", "write documents to FILE.")
-	quiet := flag.BoolP("quiet", "q", false, "quiet (no output).")
+	quiet := flag.Bool("quiet", false, "quiet (no output).")
 	flag.SetOutput(sys.Out())
 	err := flag.Parse(args)
 	f := flag.Args()
@@ -74,9 +75,9 @@ func (wg wget) Exec(args []string, sys os.Sys) int {
 	}
 	if !*quiet {
 		fmt.Fprintf(sys.Out(), "Connecting to %v (%v)|%v|:80... connected\n", urlobj.Hostname(), urlobj.Hostname(), ip[0])
-		mimeType := resp.Header.Get("Content-Type")
+		//mimeType := resp.Header.Get("Content-Type")
 		fmt.Fprintln(sys.Out(), "HTTP request sent, awaiting response... 200 OK")
-		fmt.Fprintf(sys.Out(), "Length: unspecified [%v]\n", mimeType[:strings.LastIndex(mimeType, ";")])
+		//fmt.Fprintf(sys.Out(), "Length: unspecified [%v]\n", mimeType[:strings.LastIndex(mimeType, ";")])
 	}
 	defer resp.Body.Close()
 	b, err := ioutil.ReadAll(resp.Body)
