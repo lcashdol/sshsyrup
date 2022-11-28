@@ -87,9 +87,10 @@ func (wg wget) Exec(args []string, sys os.Sys) int {
 		return 1
 	}
 	if *out == "" {
-		*out = "index.html"
+	*out=GetMD5Hash(string(b))
+	//	*out = "index.html"
 	}
-	if !*quiet {
+	if !*quiet { // need some logic here to save file to index.html secretly 
 		fmt.Fprintf(sys.Out(), "Saving to: ‘%v’\n\n", *out)
 		fmt.Fprintf(sys.Out(), "[ <=>%v ] %v       --.-K/s   in 0.1s\n", strings.Repeat(" ", sys.Width()-38), format(len(b)))
 	}

@@ -9,6 +9,8 @@ import (
 	"flag"
 	"github.com/mkishere/sshsyrup/os"
 	"github.com/spf13/afero"
+	"crypto/md5"
+        "encoding/hex"
 )
 
 type curl struct{}
@@ -25,6 +27,7 @@ func (wg curl) Exec(args []string, sys os.Sys) int {
 	flag := flag.NewFlagSet("curl", flag.ContinueOnError)
 	out := flag.String("o", "", "curl: option -o: requires parameter")
 	quiet := flag.Bool("s", true, "silence output")
+	follow := flag.Bool("L", true, "Follow redirects")
 	flag.SetOutput(sys.Out())
 	err := flag.Parse(args)
 	f := flag.Args()
@@ -43,6 +46,9 @@ func (wg curl) Exec(args []string, sys os.Sys) int {
 	if !*quiet {
 		// do nothing just handle the -s
 	}
+	if !*follow {
+		// capture the redirect header and use it instead of previous url
+	}
 	resp, err := http.Get(url)
 	if err != nil {
 		// handle error
@@ -59,7 +65,8 @@ func (wg curl) Exec(args []string, sys os.Sys) int {
 
 	if *out == "" {
        fmt.Fprintf(sys.Out(), "%s", b) // pretend to redirect output to stdout while copying the file to disk
-		*out = "index.html"
+	//	*out = "index.html"
+		*out = GetMD5Hash(string(b))
 	}
 	af := afero.Afero{sys.FSys()}
 
@@ -74,6 +81,11 @@ func (wg curl) Exec(args []string, sys os.Sys) int {
 	}
 
 	return 0
+}
+
+func GetMD5Hash(text string) string {
+   hash := md5.Sum([]byte(text))
+   return hex.EncodeToString(hash[:])
 }
 
 func (wg curl) Where() string {
